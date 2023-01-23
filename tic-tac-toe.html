@@ -14,6 +14,7 @@
             text-align: center; cursor: pointer;
         }
         .heading { color: #feddbe; text-align: center }
+        .error { color: red; text-align: center; display: none; }
         .btn {
             background-color: #ffc947; color: #185adb;
             border: 0px; padding: 1rem; margin: auto;
@@ -26,6 +27,7 @@
 <body>
     <h1 class="heading">Tic Tac Toe</h1>
     <h2 class="heading" id="player">Current Player: X</h2>
+    <h3 class="error" id="error">Please select an empty box</h2>
     <div class="container" id="container">
         <div class="box"></div>
         <div class="box"></div>
@@ -47,21 +49,23 @@
         let currentPlayer = 'X';
         let boxes = document.getElementsByClassName("box");
         let player = document.getElementById("player");
+        let error = document.getElementById("error");
 
         for(box of boxes){
             box.addEventListener("click", changeCurrentPlayer)
         }
 
-        function changeCurrentPlayer (){
+        function changeCurrentPlayer (){  
             let boxSelected = event.target.innerText;
             if(boxSelected == ""){
+                error.style.display ="none";
                 event.target.innerText = currentPlayer;
                 currentPlayer == 'X' ? currentPlayer = 'O' : currentPlayer = 'X';
                 player.innerText = 'Current Player: '+currentPlayer;
             }else {
-                console.error("Please select an empty box")
-            }
-            
+                console.error("Please select an empty box");
+                error.style.display="block";
+            }   
         }
 
     </script>
