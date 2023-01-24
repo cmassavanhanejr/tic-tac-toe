@@ -28,6 +28,7 @@
     <h1 class="heading">Tic Tac Toe</h1>
     <h2 class="heading" id="player">Current Player: X</h2>
     <h3 class="error" id="error">Please select an empty box</h2>
+    <h3 class="error" id="gameOver">GAME OVER! Please press the reset button to start a new game! </h2>
     <div class="container" id="container">
         <div class="box"></div>
         <div class="box"></div>
@@ -50,22 +51,47 @@
         let boxes = document.getElementsByClassName("box");
         let player = document.getElementById("player");
         let error = document.getElementById("error");
+        let winner = document.getElementById("winner");
+        let gameOver = document.getElementById("gameOver");
 
         for(box of boxes){
-            box.addEventListener("click", changeCurrentPlayer)
+            box.addEventListener("click", playerClick)
         }
 
-        function changeCurrentPlayer (){  
+        function playerClick (){  
             let boxSelected = event.target.innerText;
             if(boxSelected == ""){
                 error.style.display ="none";
+                if(winner.innerText != ""){
+                    console.error("Please select an empty box");
+                    gameOver.style.display="block";
+                    return;
+                }
                 event.target.innerText = currentPlayer;
+                if (isWinner()) {
+                    winner.innerText = "Player " + currentPlayer + " WINS!!";
+                    return
+                }
                 currentPlayer == 'X' ? currentPlayer = 'O' : currentPlayer = 'X';
                 player.innerText = 'Current Player: '+currentPlayer;
             }else {
                 console.error("Please select an empty box");
                 error.style.display="block";
             }   
+        }
+
+        const winPositions = ['012', '345', '678', '036', '147', '258', '048', '246'];
+        function isWinner() {
+            for (let position of winPositions) {
+                let position1 = boxes[position[0]].innerText;
+                let position2 = boxes[position[1]].innerText;
+                let position3 = boxes[position[2]].innerText;
+                if (position1 == currentPlayer && position2 == currentPlayer 
+                        && position3 == currentPlayer) {
+                    return true;
+                }
+            }
+            return false;
         }
 
     </script>
