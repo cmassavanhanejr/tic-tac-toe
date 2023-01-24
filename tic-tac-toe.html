@@ -53,6 +53,7 @@
         let error = document.getElementById("error");
         let winner = document.getElementById("winner");
         let gameOver = document.getElementById("gameOver");
+        let reset = document.getElementById("reset");
 
         for(box of boxes){
             box.addEventListener("click", playerClick)
@@ -60,13 +61,13 @@
 
         function playerClick (){  
             let boxSelected = event.target.innerText;
-            if(boxSelected == ""){
-                error.style.display ="none";
-                if(winner.innerText != ""){
-                    console.error("Please select an empty box");
+            if(winner.innerText != ""){
+                    console.error("GAME OVER!");
                     gameOver.style.display="block";
                     return;
                 }
+            if(boxSelected == ""){
+                error.style.display ="none";
                 event.target.innerText = currentPlayer;
                 if (isWinner()) {
                     winner.innerText = "Player " + currentPlayer + " WINS!!";
@@ -92,6 +93,17 @@
                 }
             }
             return false;
+        }
+
+        reset.addEventListener("click", resetButton)
+
+        function resetButton() {
+            currentPlayer = "X";
+            player.innerText = 'Current Player: '+currentPlayer;
+            for(box of boxes){
+                box.innerText = "" ;
+            }
+            winner.innerText = "";
         }
 
     </script>
